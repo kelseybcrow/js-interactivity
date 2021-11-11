@@ -1,7 +1,8 @@
 console.log("hello world");
 
-// addMovie function //
+const message = document.querySelector("#message");
 
+// addMovie function //
 const addMovie = (event) => {
   event.preventDefault();
 
@@ -12,7 +13,19 @@ const addMovie = (event) => {
   const movieTitle = document.createElement("span");
   movieTitle.textContent = inputField.value;
 
+  // cross off movie //
+  movieTitle.addEventListener("click", crossOffMovie);
+
   movie.appendChild(movieTitle);
+
+  // deleting movie //
+  const deleteBtn = document.createElement("button");
+
+  deleteBtn.textContent = "x";
+
+  deleteBtn.addEventListener("click", deleteMovie);
+
+  movie.appendChild(deleteBtn);
 
   const list = document.querySelector("ul");
   list.appendChild(movie);
@@ -21,3 +34,19 @@ const addMovie = (event) => {
 };
 
 document.querySelector("form").addEventListener("submit", addMovie);
+
+const deleteMovie = (event) => {
+  event.target.parentNode.remove();
+
+  message.textContent = "Movie has been deleted!";
+};
+
+const crossOffMovie = (event) => {
+  event.target.classList.toggle("checked");
+
+  if (event.target.classList.contains("checked")) {
+    message.textContent = "Movie has been watched!";
+  } else {
+    message.textContent = "Movie has been added back.";
+  }
+};
